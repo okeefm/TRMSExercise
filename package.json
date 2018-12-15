@@ -1,0 +1,14 @@
+{
+  "name": "trms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Michael O'Keefe <mokeefe@alum.mit.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "scripts": {
+    "start": "node ."
+  }
+}

@@ -1,0 +1,80 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+  <div id="dashboard">
+    <h1>Total viewers: <span id="total"></span></h1>
+
+    <div id="TRMSMediumv1mp4">
+      <a href="player1.html" target="_blank"><h2>2-TRMS-Medium-v1.mp4</h2></a>
+      <h3>Viewers: <span class="viewers"></span></h3>
+
+      <h2>Viewer IP addresses:</h2>
+      <ul class="viewer_list"></ul>
+    </div>
+
+    <div id="CTVNeedsInternsPromoHighv1mp4">
+      <a href="player2.html" target="_blank"><h2>52-CTV-Needs-Interns-Promo-High-v1.mp4</h2></a>
+      <h3>Viewers: <span class="viewers"></span></h3>
+
+      <h2>Viewer IP addresses:</h2>
+      <ul class="viewer_list"></ul>
+    </div>
+
+    <div id="NAB2014Artbeats30minHighv4mp4">
+      <a href="player3.html" target="_blank"><h2>3-NAB-2014-Artbeats-30min-High-v4.mp4</h2></a>
+      <h3>Viewers: <span class="viewers"></span></h3>
+
+      <h2>Viewer IP addresses:</h2>
+      <ul class="viewer_list"></ul>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var activeViewerCount = 0;
+    // Number of seconds to wait before declaring a viewer "inactive"
+    var activeThreshold = 5 * 1000;
+
+    function secondsToTime(seconds) {
+      var parsedSeconds = parseInt(seconds);
+      var minutes = parsedSeconds / 60;
+      var remainingSeconds = parsedSeconds % 60;
+      return minutes.toFixed(0).padStart(2, '0') + ":" + remainingSeconds.toFixed(0).padStart(2, '0');
+    }
+
+    function updatePage() {
+      $.get('/api/dashboard', function(data) {
+        // reset the active viewer count to get the new count
+        activeViewerCount = 0;
+        var currentTime = new Date().getTime();
+        for (video in data) {
+          var htmlString = "";
+          var videoTitle = video.replace(/http:\/\/reflect-tightytv-vod\.cablecast\.tv\/vod\/\d+-/, '').replace(/\W/g, '');
+          videoViewerCount = 0;
+          for (viewerId in data[video]) {
+            var viewer = data[video][viewerId];
+            // check if the viewer was last seen less than activeThreshold seconds ago
+            if (viewer.lastSeen >= (currentTime - activeThreshold)) {
+              videoViewerCount += 1;
+              htmlString += "<li>" + viewer.ip + ", current time: " + secondsToTime(viewer.currentTime) + "</li>";
+            }
+          }
+          $("#" + videoTitle + " .viewers").text(videoViewerCount);
+          $("#" + videoTitle + " .viewer_list").html(htmlString);
+          activeViewerCount += videoViewerCount;
+        }
+        $("span#total").text(activeViewerCount);
+      });
+
+    }
+    updatePage();
+    window.setInterval(updatePage, 2000);
+  </script>
+</body>
+
+</html>
