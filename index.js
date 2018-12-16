@@ -40,6 +40,8 @@ let players = {
     'http://reflect-tightytv-vod.cablecast.tv/vod/3-NAB-2014-Artbeats-30min-High-v4.mp4': {}
 };
 
+app.set('trust proxy', true)
+
 // endpoint for player to hit
 app.post('/api/player', (req, res) => {
     players[req.body.video][req.body.id] = {

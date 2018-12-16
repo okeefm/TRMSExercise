@@ -12,7 +12,7 @@
       <a href="player1.html" target="_blank"><h2>2-TRMS-Medium-v1.mp4</h2></a>
       <h3>Viewers: <span class="viewers"></span></h3>
 
-      <h2>Viewer IP addresses:</h2>
+      <h2>Viewer IP addresses and Position:</h2>
       <ul class="viewer_list"></ul>
     </div>
 
@@ -20,7 +20,7 @@
       <a href="player2.html" target="_blank"><h2>52-CTV-Needs-Interns-Promo-High-v1.mp4</h2></a>
       <h3>Viewers: <span class="viewers"></span></h3>
 
-      <h2>Viewer IP addresses:</h2>
+      <h2>Viewer IP addresses and Position:</h2>
       <ul class="viewer_list"></ul>
     </div>
 
@@ -28,7 +28,7 @@
       <a href="player3.html" target="_blank"><h2>3-NAB-2014-Artbeats-30min-High-v4.mp4</h2></a>
       <h3>Viewers: <span class="viewers"></span></h3>
 
-      <h2>Viewer IP addresses:</h2>
+      <h2>Viewer IP addresses and Position:</h2>
       <ul class="viewer_list"></ul>
     </div>
   </div>
@@ -61,7 +61,7 @@
             // check if the viewer was last seen less than activeThreshold seconds ago
             if (viewer.lastSeen >= (currentTime - activeThreshold)) {
               videoViewerCount += 1;
-              htmlString += "<li>" + viewer.ip + ", current time: " + secondsToTime(viewer.currentTime) + "</li>";
+              htmlString += "<li>" + viewer.ip + ", Current time: " + secondsToTime(viewer.currentTime) + "</li>";
             }
           }
           $("#" + videoTitle + " .viewers").text(videoViewerCount);
